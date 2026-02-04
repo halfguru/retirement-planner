@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { initWasm, getCalculator } from '@/lib/wasm-loader'
 import type { HouseholdConfig, AccountBalance, ContributionConfig, ChildInfo, Assumptions, RetirementProjection } from '@/types/household'
 import './App.css'
 
 function App() {
   const [wasmLoaded, setWasmLoaded] = useState(false)
+  const wasmInitialized = useRef(false)
   const householdConfig: HouseholdConfig = {
     retirement_age: 65,
     expected_annual_income: 60000,
@@ -38,28 +39,26 @@ function App() {
   const [projection, setProjection] = useState<RetirementProjection | null>(null)
 
   useEffect(() => {
+    if (wasmInitialized.current) return
+    wasmInitialized.current = true
+
     initWasm().then(() => {
       setWasmLoaded(true)
-      calculateProjections()
+
+      const calculator = getCalculator()
+
+      const projResult = calculator.calculate_projection(
+        householdConfig,
+        accountBalance,
+        contributions,
+        children,
+        assumptions,
+        currentAge,
+      )
+
+      setProjection(projResult)
     })
-  }, [])
-
-  function calculateProjections() {
-    if (!wasmLoaded) return
-
-    const calculator = getCalculator()
-
-    const projResult = calculator.calculate_projection(
-      householdConfig,
-      accountBalance,
-      contributions,
-      children,
-      assumptions,
-      currentAge,
-    )
-
-    setProjection(projResult)
-  }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!wasmLoaded) {
     return (
