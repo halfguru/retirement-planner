@@ -12,6 +12,12 @@ pub use models::{
 #[wasm_bindgen]
 pub struct RetirementCalculator;
 
+impl Default for RetirementCalculator {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 #[wasm_bindgen]
 impl RetirementCalculator {
     #[wasm_bindgen(constructor)]
