@@ -3,7 +3,10 @@ mod models;
 
 use wasm_bindgen::prelude::*;
 
-pub use calculations::{calculate_projection, calculate_yearly_projections};
+pub use calculations::{
+    calculate_projection, calculate_simple_projection, calculate_yearly_projections,
+    SimpleProjection,
+};
 pub use models::{
     AccountBalance, Assumptions, ChildInfo, ContributionConfig, HouseholdConfig,
     RetirementProjection, YearlyProjection,
@@ -90,6 +93,27 @@ impl RetirementCalculator {
             &contributions,
             &assumptions,
             current_age,
+        );
+
+        serde_wasm_bindgen::to_value(&projections)
+            .map_err(|e| JsValue::from_str(&format!("Failed to serialize projections: {}", e)))
+    }
+
+    #[wasm_bindgen]
+    pub fn calculate_simple_projection(
+        &self,
+        total_portfolio: f64,
+        current_age: u32,
+        retirement_age: u32,
+        return_rate: f64,
+        current_year: u32,
+    ) -> Result<JsValue, JsValue> {
+        let projections = calculate_simple_projection(
+            total_portfolio,
+            current_age,
+            retirement_age,
+            return_rate,
+            current_year,
         );
 
         serde_wasm_bindgen::to_value(&projections)
