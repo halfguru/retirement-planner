@@ -3,6 +3,14 @@ use crate::models::{
     RetirementProjection, YearlyProjection,
 };
 
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SimpleProjection {
+    pub year: u32,
+    pub age: u32,
+    pub portfolio_value: f64,
+}
+
 pub fn calculate_projection(
     household_config: &HouseholdConfig,
     account_balance: &AccountBalance,
@@ -116,4 +124,32 @@ fn calculate_future_value(
 
 fn calculate_safe_withdrawal(net_worth: f64) -> f64 {
     net_worth * 0.04
+}
+
+pub fn calculate_simple_projection(
+    total_portfolio: f64,
+    current_age: u32,
+    retirement_age: u32,
+    return_rate: f64,
+    current_year: u32,
+) -> Vec<SimpleProjection> {
+    let years_to_retirement = retirement_age.saturating_sub(current_age);
+
+    if years_to_retirement == 0 {
+        return vec![];
+    }
+
+    let mut projections = Vec::new();
+
+    for year in 0..=years_to_retirement {
+        let age = current_age + year;
+        let portfolio_value = total_portfolio * (1.0 + return_rate / 100.0).powi(year as i32);
+        projections.push(SimpleProjection {
+            year: current_year + year,
+            age,
+            portfolio_value,
+        });
+    }
+
+    projections
 }

@@ -1,4 +1,4 @@
-import init, { RetirementCalculator } from './financial_math_wasm.js'
+import init, { RetirementCalculator } from './retirement_core.js'
 
 let wasmInitialized = false
 let calculator: RetirementCalculator | null = null
