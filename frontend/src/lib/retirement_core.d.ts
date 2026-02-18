@@ -4,6 +4,7 @@
 export class RetirementCalculator {
     free(): void;
     [Symbol.dispose](): void;
+    calculate_additional_annual_savings(current_portfolio: number, target_portfolio: number, years: number, return_rate: number, inflation_rate: number, current_annual_contributions: number): number;
     calculate_projection(household_config_js: any, account_balance_js: any, contributions_js: any, children_js: any, assumptions_js: any, current_age: number): any;
     calculate_simple_projection(total_portfolio: number, current_age: number, retirement_age: number, return_rate: number, current_year: number): any;
     calculate_yearly_projections(household_config_js: any, account_balance_js: any, contributions_js: any, assumptions_js: any, current_age: number): any;
@@ -15,6 +16,7 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_retirementcalculator_free: (a: number, b: number) => void;
+    readonly retirementcalculator_calculate_additional_annual_savings: (a: number, b: number, c: number, d: number, e: number, f: number, g: number) => number;
     readonly retirementcalculator_calculate_projection: (a: number, b: any, c: any, d: any, e: any, f: any, g: number) => [number, number, number];
     readonly retirementcalculator_calculate_simple_projection: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number, number];
     readonly retirementcalculator_calculate_yearly_projections: (a: number, b: any, c: any, d: any, e: any, f: number) => [number, number, number];

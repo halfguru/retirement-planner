@@ -12,6 +12,19 @@ export class RetirementCalculator {
         wasm.__wbg_retirementcalculator_free(ptr, 0);
     }
     /**
+     * @param {number} current_portfolio
+     * @param {number} target_portfolio
+     * @param {number} years
+     * @param {number} return_rate
+     * @param {number} inflation_rate
+     * @param {number} current_annual_contributions
+     * @returns {number}
+     */
+    calculate_additional_annual_savings(current_portfolio, target_portfolio, years, return_rate, inflation_rate, current_annual_contributions) {
+        const ret = wasm.retirementcalculator_calculate_additional_annual_savings(this.__wbg_ptr, current_portfolio, target_portfolio, years, return_rate, inflation_rate, current_annual_contributions);
+        return ret;
+    }
+    /**
      * @param {any} household_config_js
      * @param {any} account_balance_js
      * @param {any} contributions_js

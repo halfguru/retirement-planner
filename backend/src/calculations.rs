@@ -153,3 +153,52 @@ pub fn calculate_simple_projection(
 
     projections
 }
+
+pub fn calculate_additional_annual_savings(
+    current_portfolio: f64,
+    target_portfolio: f64,
+    years: u32,
+    return_rate: f64,
+    inflation_rate: f64,
+    current_annual_contributions: f64,
+) -> f64 {
+    if years == 0 || current_portfolio >= target_portfolio {
+        return 0.0;
+    }
+
+    let monthly_return_rate = return_rate / 100.0 / 12.0;
+    let monthly_inflation_rate = inflation_rate / 100.0 / 12.0;
+    let months = years * 12;
+    let inflation_factor = (1.0 + monthly_inflation_rate).powi(months as i32);
+
+    let simulate_projection = |annual_contribution: f64| -> f64 {
+        let mut balance = current_portfolio;
+        let monthly_contribution = annual_contribution / 12.0;
+        for _ in 0..months {
+            balance = balance * (1.0 + monthly_return_rate) + monthly_contribution;
+        }
+        balance / inflation_factor
+    };
+
+    let tolerance = 100.0;
+    let mut low = 0.0;
+    let mut high = f64::max(current_annual_contributions * 2.0, 1000000.0);
+
+    for _ in 0..100 {
+        let mid = (low + high) / 2.0;
+        let result = simulate_projection(mid);
+
+        if (result - target_portfolio).abs() < tolerance {
+            return f64::max(0.0, mid - current_annual_contributions).round();
+        }
+
+        if result < target_portfolio {
+            low = mid;
+        } else {
+            high = mid;
+        }
+    }
+
+    let final_result = (low + high) / 2.0;
+    f64::max(0.0, final_result - current_annual_contributions).round()
+}
