@@ -32,7 +32,7 @@ If WASM changes are needed:
 cd backend && wasm-pack build --target web
 cp backend/pkg/retirement_core_bg.wasm frontend/public/wasm/
 cp backend/pkg/retirement_core.js frontend/src/lib/
-cp backend/pkg/retirement_core_bg.wasm.d.ts frontend/src/lib/retirement_core.d.ts
+cp backend/pkg/retirement_core.d.ts frontend/src/lib/
 ```
 
 ## Phase 4: Validate

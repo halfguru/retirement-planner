@@ -25,7 +25,7 @@ This file guides agentic coding agents working on the retirement planning app.
 - `cd backend && cargo fmt` - Format Rust code
 - `cd backend && wasm-pack build --target web` - Build WASM package (run from root: `cd backend && wasm-pack build --target web`)
 - After building WASM: `cp backend/pkg/retirement_core_bg.wasm frontend/public/wasm/` - Copy WASM to frontend
-- After building WASM: `cp backend/pkg/retirement_core.js frontend/src/lib/ && cp backend/pkg/retirement_core_bg.wasm.d.ts frontend/src/lib/financial_math_wasm.d.ts` - Copy JS bindings to frontend
+- After building WASM: `cp backend/pkg/retirement_core.js frontend/src/lib/ && cp backend/pkg/retirement_core.d.ts frontend/src/lib/` - Copy JS bindings and types to frontend
 - Note: All copy commands should be run from project root directory
 
 ## GitHub Actions
