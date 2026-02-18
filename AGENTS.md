@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file guides agentic coding agents working on the retirement planning app.
+This file guides agentic coding agents working on Retire, Eh? — a Canadian retirement planning app.
 
 ## Build Commands
 
@@ -38,7 +38,7 @@ This file guides agentic coding agents working on the retirement planning app.
 ### Deploy Pipeline (`.github/workflows/deploy.yml`)
 - Runs on push to `main` branch
 - Builds WASM and frontend
-- Deploys to GitHub Pages: https://halfguru.github.io/retirement-planner/
+- Deploys to GitHub Pages: https://halfguru.github.io/retire-eh/
 
 ### Release Pipeline (`.github/workflows/release.yml`)
 - Runs on version tags (`v*`, e.g., `v1.0.0`)

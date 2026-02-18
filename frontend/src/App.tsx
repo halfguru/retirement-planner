@@ -173,10 +173,10 @@ function App() {
         <div className="flex justify-between items-start mb-8">
           <div style={{ animation: 'fadeInUp 0.6s ease-out forwards', opacity: 0 }}>
             <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
-              Retirement Planning Dashboard
+              Retire, Eh? 🍁
             </h1>
             <p className="text-gray-500 dark:text-gray-400 mt-1">
-              Plan your financial future with optimized investment strategies
+              Plan your retirement, eh?
             </p>
           </div>
           <div className="flex gap-2 items-center">
@@ -321,10 +321,10 @@ function App() {
       <footer className="mt-8 py-6 border-t border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500 dark:text-gray-400">
           <p className="mb-2">
-            Built with Rust (WASM), React, and TypeScript
+            Built with Rust (WASM), React, and TypeScript 🍁
           </p>
           <a
-            href="https://github.com/halfguru/retirement-planner"
+            href="https://github.com/halfguru/retire-eh"
             target="_blank"
             rel="noopener noreferrer"
             className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
