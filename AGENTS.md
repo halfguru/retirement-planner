@@ -28,93 +28,6 @@ This file guides agentic coding agents working on the retirement planning app.
 - After building WASM: `cp backend/pkg/retirement_core.js frontend/src/lib/ && cp backend/pkg/retirement_core_bg.wasm.d.ts frontend/src/lib/financial_math_wasm.d.ts` - Copy JS bindings to frontend
 - Note: All copy commands should be run from project root directory
 
-## Project Structure
-
-```
-retirement-planner/
-├── frontend/                 # React + TypeScript + Tailwind CSS
-│   ├── src/
-│   │   ├── components/        # React components
-│   │   ├── charts/          # Recharts visualization components
-│   │   ├── lib/             # Utilities and WASM wrappers
-│   │   └── types/           # TypeScript type definitions
-│   ├── public/
-│   │   └── wasm/            # Compiled WASM binaries
-│   └── package.json
-└── backend/                  # Rust core (compiled to WASM)
-    ├── src/
-    │   ├── calculations.rs    # Financial math logic
-    │   ├── models.rs         # Data structures
-    │   └── lib.rs           # WASM exports
-    ├── pkg/                  # wasm-pack output (don't edit)
-    └── Cargo.toml
-```
-
-## Code Style Guidelines
-
-### Import Organization
-- Group imports: React/external libs, internal components, types, styles
-- Use absolute imports from `@/` for internal modules
-- Example:
-  ```ts
-  import React from 'react'
-  import { LineChart } from 'recharts'
-  import { RetirementProjection } from '@/types'
-  import { calculateHouseholdSavings } from '@/core/calculations'
-  ```
-
-### TypeScript Conventions
-- Use `interface` for object shapes, `type` for unions/aliases
-- Be explicit with return types on exported functions
-- Use `readonly` for immutable arrays
-- Avoid `any` - prefer `unknown` with type guards
-- Use enums sparingly; prefer literal unions when values are strings
-
-### Rust Conventions
-- Follow `rustfmt` formatting (run `cargo fmt` before committing)
-- Use `cargo clippy` for linting
-- Prefer idiomatic Rust patterns over JavaScript-style code
-- Use `Result<T, E>` for fallible operations
-- Define domain-specific error types with `thiserror`
-- Document public APIs with `///`
-
-### Naming Conventions
-- Components: PascalCase (`RetirementDashboard.tsx`)
-- Functions: camelCase (`calculateAnnualSavings`)
-- Constants: UPPER_SNAKE_CASE (`MAX_RETIREMENT_AGE`)
-- Types/interfaces: PascalCase (`HouseholdConfig`)
-- Test files: `.test.tsx` or `.spec.tsx` suffix
-- Test files mirror source structure: `src/components/__tests__/Dashboard.test.tsx`
-- Rust structs: PascalCase (`HouseholdConfig`)
-- Rust functions: snake_case (`calculate_annual_savings`)
-
-### React/JSX Style
-- Functional components with hooks only
-- Use TypeScript for all props: `interface Props { ... }`
-- Destructure props at component top
-- Prefer explicit event handlers over inline arrow functions
-- Keep components under 300 lines; extract subcomponents
-
-### Styling (Tailwind CSS)
-- Use utility classes over custom CSS
-- Prefer design system values: `text-neutral-700` over `text-gray-500`
-- Use `@apply` only in component-scoped files
-- Mobile-first responsive design: `md:`, `lg:` prefixes
-
-## Error Handling
-
-### Frontend
-- Validate user inputs with Zod or similar
-- Display errors in context (near inputs, not alerts)
-- Use error boundaries for component-level crashes
-- Log errors to console with context
-
-### Rust Core
-- Use `Result<T, E>` for fallible operations
-- Define domain-specific error types with `thiserror`
-- Propagate errors with `?` operator; context with `.context()`
-- Write tests covering error branches
-
 ## GitHub Actions
 
 ### CI Pipeline (`.github/workflows/ci.yml`)
@@ -127,18 +40,35 @@ retirement-planner/
 - Builds WASM and frontend
 - Uploads `frontend/dist` as artifacts for deployment
 
-## Testing Principles
-
-- Test financial calculations in Rust; UI integration in React
-- Write unit tests for core math functions
-- Use deterministic inputs/outputs (no random values)
-- Test edge cases: zero values, negative inputs, max ages
-- Maintain 80%+ coverage on financial logic
-
 ## Philosophy Alignment
 
 - Prioritize clarity over cleverness
 - Comments should explain "why", not "what"
-- Make math explicit and traceable
 - Use conservative assumptions as defaults
 - Use neutral, professional visuals and interactions
+
+## OpenCode Workflow
+
+This project includes custom OpenCode commands and agents for structured development.
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `/feature <name>` | Full workflow: explore → plan → build → validate → PR |
+| `/review` | Multi-specialist code review (frontend, WASM, infra) |
+| `/prepare-pr` | Generate PR with WASM artifact validation |
+
+### Agents
+
+| Agent | Specialization |
+|-------|----------------|
+| `@review-frontend` | React/TypeScript patterns, accessibility, performance |
+| `@review-wasm` | Rust/WASM best practices, memory safety |
+| `@review-infra` | CI/CD pipelines, build process, security |
+
+### Skills
+
+Skills are loaded on-demand via `/skill <name>`:
+- `react-component` - React component patterns with TypeScript
+- `wasm-workflow` - WASM build and integration workflow

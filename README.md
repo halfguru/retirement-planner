@@ -75,6 +75,16 @@ The Rust core exists to:
 * Reduce bugs and ambiguity
 * Increase trust in outputs
 
+### Development Workflow
+
+This project includes an [OpenCode](https://opencode.ai) configuration for structured AI-assisted development:
+
+* `/feature <name>` - Full feature workflow
+* `/review` - Multi-specialist code review
+* `/prepare-pr` - PR preparation with WASM validation
+
+See [AGENTS.md](./AGENTS.md) for build commands and conventions.
+
 ---
 
 ## What the App Must Do Well
