@@ -5,7 +5,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: process.env.GITHUB_PAGES ? '/retirement-planner/' : '/',
+  base: process.env.GITHUB_PAGES ? '/retire-eh/' : '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

@@ -1,5 +1,6 @@
 {
-  "name": "frontend",
+  "name": "retire-eh",
+  "description": "Canadian retirement planner for RRSP, TFSA, and CPP",
   "private": true,
   "version": "0.0.0",
   "type": "module",

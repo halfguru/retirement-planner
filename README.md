@@ -1,18 +1,19 @@
-# 💰 Retirement Planner
+# 🍁 Retire, Eh?
 
-[![CI](https://github.com/halfguru/retirement-planner/actions/workflows/ci.yml/badge.svg)](https://github.com/halfguru/retirement-planner/actions/workflows/ci.yml)
-[![Deploy](https://github.com/halfguru/retirement-planner/actions/workflows/deploy.yml/badge.svg)](https://github.com/halfguru/retirement-planner/actions/workflows/deploy.yml)
+[![CI](https://github.com/halfguru/retire-eh/actions/workflows/ci.yml/badge.svg)](https://github.com/halfguru/retire-eh/actions/workflows/ci.yml)
+[![Deploy](https://github.com/halfguru/retire-eh/actions/workflows/deploy.yml/badge.svg)](https://github.com/halfguru/retire-eh/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> Are we actually on track — and why?
+> Plan your Canadian retirement, eh?
 
-A household-first retirement planning tool with conservative projections and transparent calculations. All calculations happen in your browser — no accounts, no data collection, complete privacy.
+A household-first retirement planner for Canadians. Plan your RRSP, TFSA, and CPP strategy with conservative projections and transparent calculations. All calculations happen in your browser — no accounts, no data collection, complete privacy.
 
-**[🔗 Live Demo](https://halfguru.github.io/retirement-planner/)**
+**[🔗 Live Demo](https://halfguru.github.io/retire-eh/)**
 
 ## ✨ Features
 
 - **🏠 Household-first dashboard** — Combined progress, not siloed by individual
+- **🇨🇦 Canadian-focused** — Built for RRSP, TFSA, and CPP planning
 - **📊 Clear projections** — Visualize your portfolio growth over time
 - **🎯 Goal tracking** — See if you're on track for your retirement income target
 - **🔒 Privacy-first** — All calculations run locally in your browser
@@ -22,8 +23,8 @@ A household-first retirement planning tool with conservative projections and tra
 
 ```bash
 # Clone the repository
-git clone https://github.com/halfguru/retirement-planner.git
-cd retirement-planner
+git clone https://github.com/halfguru/retire-eh.git
+cd retire-eh
 
 # Install frontend dependencies
 cd frontend && npm install
@@ -88,13 +89,13 @@ See [AGENTS.md](./AGENTS.md) for detailed build commands and conventions.
 - **Explicit explanations** — Show the math, don't hide it
 - **Household-first approach** — Evaluate savings jointly
 
-### Retirement Planning Philosophy
+### Canadian Retirement Philosophy
 
 > One household balance sheet, multiple tax wrappers.
 
 - Retirement success is a **household outcome**
 - Savings evaluated jointly, regardless of who contributes
-- Tax-advantaged account allocation should be **strategic**
+- Strategic allocation between RRSP and TFSA based on marginal tax rates
 
 ## 🚫 Non-Goals (For Now)
 
@@ -103,6 +104,7 @@ See [AGENTS.md](./AGENTS.md) for detailed build commands and conventions.
 - Complex tax optimization engines
 - Monte Carlo simulations
 - FIRE or early-retirement evangelism
+- Non-Canadian retirement accounts (401k, IRA, etc.)
 
 ## 📄 License
 
@@ -110,4 +112,4 @@ This project is licensed under the MIT License — see [LICENSE](LICENSE) for de
 
 ---
 
-*Built with ❤️ using Rust (WASM), React, and TypeScript*
+*Built with ❤️ in Canada using Rust (WASM), React, and TypeScript*

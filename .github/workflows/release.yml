@@ -70,20 +70,20 @@ jobs:
       - name: Create artifact archive
         run: |
           cd frontend/dist
-          zip -r ../../retirement-planner-${{ github.ref_name }}.zip .
+          zip -r ../../retire-eh-${{ github.ref_name }}.zip .
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: retirement-planner-${{ github.ref_name }}.zip
+          files: retire-eh-${{ github.ref_name }}.zip
           generate_release_notes: true
           body: |
-            ## Retirement Planner ${{ github.ref_name }}
+            ## Retire, Eh? ${{ github.ref_name }}
             
             ### Download
             
-            Download the artifact `retirement-planner-${{ github.ref_name }}.zip` and extract it to any static file server.
+            Download `retire-eh-${{ github.ref_name }}.zip` and extract it to any static file server.
             
             ### Live Demo
             
-            Try it at: https://halfguru.github.io/retirement-planner/
+            Try it at: https://halfguru.github.io/retire-eh/
