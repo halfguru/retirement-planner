@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 
 export function formatCurrency(value: number | string): string {
   const num = typeof value === 'string' ? parseFloat(value.replace(/,/g, '')) || 0 : value
@@ -61,10 +61,10 @@ export function usePeopleManagement() {
     return '1'
   })
 
-  useEffect(() => {
-    if (people.length > 0 && (!selectedPersonId || !people.find(p => p.id === selectedPersonId))) {
-      setSelectedPersonId(people[0].id)
-    }
+  const effectiveSelectedPersonId = useMemo(() => {
+    if (people.length === 0) return null
+    const isValid = people.some(p => p.id === selectedPersonId)
+    return isValid ? selectedPersonId : people[0].id
   }, [people, selectedPersonId])
 
   const addPerson = () => {
@@ -146,12 +146,12 @@ export function usePeopleManagement() {
     setPeople(people.map(p => p.id === personId ? { ...p, annualPension } : p))
   }
 
-  const getCurrentPerson = () => people.find(p => p.id === selectedPersonId) || people[0]
+  const getCurrentPerson = () => people.find(p => p.id === effectiveSelectedPersonId) || people[0]
 
   return {
     people,
     setPeople,
-    selectedPersonId,
+    selectedPersonId: effectiveSelectedPersonId,
     setSelectedPersonId,
     addPerson,
     deletePerson,

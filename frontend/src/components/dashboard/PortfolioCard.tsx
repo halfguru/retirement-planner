@@ -1,11 +1,11 @@
-import type { Person } from '@/hooks/usePeopleManagement'
+import type { Person, Account } from '@/hooks/usePeopleManagement'
 
 interface PortfolioCardProps {
   portfolioView: 'combined' | 'individual'
   totalPortfolio: number
   selectedPersonPortfolio: number
-  allAccounts: any[]
-  selectedPersonAccounts: any[]
+  allAccounts: Account[]
+  selectedPersonAccounts: Account[]
   selectedPortfolioPerson: Person
 }
 

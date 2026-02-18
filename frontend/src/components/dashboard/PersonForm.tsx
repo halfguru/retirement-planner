@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import type { Person } from '@/hooks/usePeopleManagement'
 import { InfoTooltip } from './InfoTooltip'
 import { AccountCard } from './AccountCard'
@@ -6,13 +6,12 @@ import { formatCurrency } from '@/hooks/usePeopleManagement'
 
 function NumberInput({ value, onChange, step, min }: { value: number, onChange: (val: number) => void, step: number, min?: number }) {
   const [focused, setFocused] = useState(false)
-  const [displayValue, setDisplayValue] = useState('')
 
-  useEffect(() => {
+  const displayValue = useMemo(() => {
     if (!focused) {
-      setDisplayValue(value === 0 ? '' : formatCurrency(value))
+      return value === 0 ? '' : formatCurrency(value)
     } else {
-      setDisplayValue(value === 0 ? '' : String(value))
+      return value === 0 ? '' : String(value)
     }
   }, [value, focused])
 
@@ -65,7 +64,7 @@ function NumberInput({ value, onChange, step, min }: { value: number, onChange: 
           .number-input::-webkit-autofill,
           .number-input:-webkit-autofill,
           .number-input::-webkit-autofill:hover,
-          .number-input:-webkit-autofill:focus {
+          .number-input::-webkit-autofill:focus {
             -webkit-text-fill-color: #f3f4f6;
             -webkit-box-shadow: 0 0 0 30px #374151 inset;
             background-color: #374151 !important;
@@ -128,28 +127,21 @@ export function PersonForm({
   const person = people.find(p => p.id === selectedPersonId) || people[0]
   if (!person) return null
 
+  const canDeletePerson = people.length > 1
+
   return (
     <div ref={menuContainerRef}>
       <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
         👤 Person Details
       </h2>
-      <div className="flex justify-between items-start mb-4">
+      <div className="mb-4">
         <input
           type="text"
           value={person.name}
           onChange={(e) => onUpdatePerson(person.id, 'name', e.target.value)}
-          className="px-3 py-2 border-2 border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white font-medium focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all flex-1 mr-2"
+          className="w-full px-3 py-2 border-2 border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white font-medium focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
           placeholder="Person's name"
         />
-        <button
-          onClick={() => onDeletePerson(person.id)}
-          className="p-2 text-gray-400 hover:text-red-600 dark:text-gray-500 dark:hover:text-red-400 rounded transition-colors"
-          title="Delete person"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-          </svg>
-        </button>
       </div>
       <div className="space-y-4">
         <div>
@@ -265,6 +257,17 @@ export function PersonForm({
             </div>
           )}
         </div>
+
+        {canDeletePerson && (
+          <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+            <button
+              onClick={() => onDeletePerson(person.id)}
+              className="w-full px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg transition-colors"
+            >
+              Delete this person
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -22,7 +22,7 @@ export function AssumptionsPanel({
   setWithdrawalRate
 }: AssumptionsPanelProps) {
   return (
-    <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg border border-slate-200 dark:border-gray-700 p-6" style={{ animation: 'fadeInUp 0.5s ease-out forwards', opacity: 0 }}>
+    <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg border border-slate-200 dark:border-gray-700 p-6 relative z-10" style={{ animation: 'fadeInUp 0.5s ease-out forwards', opacity: 0 }}>
       <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
         ⚙️ Assumptions
       </h2>
