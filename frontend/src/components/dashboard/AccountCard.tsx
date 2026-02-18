@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import type { Account } from '@/hooks/usePeopleManagement'
 import { formatCurrency } from '@/hooks/usePeopleManagement'
 
 function NumberInput({ value, onChange, step, min }: { value: number, onChange: (val: number) => void, step: number, min?: number }) {
   const [focused, setFocused] = useState(false)
-  const [displayValue, setDisplayValue] = useState('')
 
-  useEffect(() => {
+  const displayValue = useMemo(() => {
     if (!focused) {
-      setDisplayValue(value === 0 ? '' : formatCurrency(value))
+      return value === 0 ? '' : formatCurrency(value)
     } else {
-      setDisplayValue(value === 0 ? '' : String(value))
+      return value === 0 ? '' : String(value)
     }
   }, [value, focused])
 

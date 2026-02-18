@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, useCallback } from 'react'
 import './App.css'
 import { useDarkMode } from '@/hooks/useDarkMode'
 import { usePeopleManagement } from '@/hooks/usePeopleManagement'
@@ -71,9 +71,9 @@ function App() {
     updateAccountContribution
   } = usePeopleManagement()
 
-  const { wasmLoaded, calculateProjection } = useProjection()
+  const { calculateProjection } = useProjection()
 
-  const saveToLocalStorage = () => {
+  const saveToLocalStorage = useCallback(() => {
     people.forEach((person, idx) => {
       localStorage.setItem(`person_${idx}_currentAge`, String(person.currentAge))
       localStorage.setItem(`person_${idx}_retirementAge`, String(person.retirementAge))
@@ -89,16 +89,16 @@ function App() {
     localStorage.setItem('showRealValues', String(showRealValues))
     localStorage.setItem('replacementRate', String(replacementRate))
     localStorage.setItem('withdrawalRate', String(withdrawalRate))
-  }
-
-  useEffect(() => {
-    saveToLocalStorage()
   }, [people, expectedReturn, inflationRate, showRealValues, replacementRate, withdrawalRate])
 
   useEffect(() => {
-    if (people.length > 0 && (!portfolioPersonId || !people.find(p => p.id === portfolioPersonId))) {
-      setPortfolioPersonId(people[0].id)
-    }
+    saveToLocalStorage()
+  }, [saveToLocalStorage])
+
+  const effectivePortfolioPersonId = useMemo(() => {
+    if (people.length === 0) return null
+    const isValid = people.some(p => p.id === portfolioPersonId)
+    return isValid ? portfolioPersonId : people[0].id
   }, [people, portfolioPersonId])
 
   const householdRetirementAge = Math.max(...people.map(p => p.retirementAge))
@@ -108,20 +108,20 @@ function App() {
   const allAccounts = people.flatMap(p => p.accounts)
   const totalPortfolio = allAccounts.reduce((sum, acc) => sum + (acc.balance || 0), 0)
   const totalAnnualContributions = allAccounts.reduce((sum, acc) => sum + (acc.annualContribution || 0), 0)
-  const selectedPortfolioPerson = people.find(p => p.id === portfolioPersonId) || people[0]
-  const selectedPersonAccounts = selectedPortfolioPerson?.accounts || []
-  const selectedPersonPortfolio = selectedPersonAccounts.reduce((sum, acc) => sum + (acc.balance || 0), 0)
+  const selectedPortfolioPerson = people.find(p => p.id === effectivePortfolioPersonId) || people[0]
+  const selectedPersonAccounts = useMemo(() => selectedPortfolioPerson?.accounts || [], [selectedPortfolioPerson])
+  const selectedPersonPortfolio = useMemo(() => selectedPersonAccounts.reduce((sum, acc) => sum + (acc.balance || 0), 0), [selectedPersonAccounts])
 
   const projectionData = useMemo(() => {
     const youngestAge = Math.min(...people.map(p => p.currentAge))
     return calculateProjection(allAccounts, householdRetirementAge, youngestAge, expectedReturn, inflationRate, showRealValues, yearsToRetirement)
-  }, [allAccounts, householdRetirementAge, expectedReturn, inflationRate, showRealValues, wasmLoaded, calculateProjection, yearsToRetirement, people])
+  }, [allAccounts, householdRetirementAge, expectedReturn, inflationRate, showRealValues, calculateProjection, yearsToRetirement, people])
 
   const individualProjectionData = useMemo(() => {
     if (!selectedPortfolioPerson) return []
     const baseAge = selectedPortfolioPerson.currentAge
     return calculateProjection(selectedPersonAccounts, selectedPortfolioPerson.retirementAge, baseAge, expectedReturn, inflationRate, showRealValues, yearsToRetirement)
-  }, [selectedPortfolioPerson, selectedPersonAccounts, expectedReturn, inflationRate, showRealValues, wasmLoaded, calculateProjection, yearsToRetirement])
+  }, [selectedPortfolioPerson, selectedPersonAccounts, expectedReturn, inflationRate, showRealValues, calculateProjection, yearsToRetirement])
 
   const currentProjectionData = portfolioView === 'combined' ? projectionData : individualProjectionData
 
@@ -134,7 +134,7 @@ function App() {
       return calculateProjection(selectedPersonAccounts, selectedPortfolioPerson.retirementAge, baseAge, expectedReturn, inflationRate, true, yearsToRetirement)
     }
     return []
-  }, [allAccounts, householdRetirementAge, expectedReturn, inflationRate, wasmLoaded, calculateProjection, yearsToRetirement, people, portfolioView, selectedPortfolioPerson, selectedPersonAccounts])
+  }, [allAccounts, householdRetirementAge, expectedReturn, inflationRate, calculateProjection, yearsToRetirement, people, portfolioView, selectedPortfolioPerson, selectedPersonAccounts])
 
   const handleExport = () => {
     const yamlContent = exportToYAML(

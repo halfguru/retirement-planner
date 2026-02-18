@@ -1,5 +1,6 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import type { ProjectionDataPoint } from '@/hooks/useProjection'
+import type { Person } from '@/hooks/usePeopleManagement'
 
 function formatCurrency(value: number): string {
   if (value >= 1000000) {
@@ -13,7 +14,7 @@ function formatCurrency(value: number): string {
 interface GrowthChartProps {
   isDarkMode: boolean
   portfolioView: 'combined' | 'individual'
-  selectedPortfolioPerson: any
+  selectedPortfolioPerson: Person | undefined
   currentProjectionData: ProjectionDataPoint[]
   yearsToRetirement: number
 }
