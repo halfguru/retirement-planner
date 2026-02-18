@@ -1,123 +1,113 @@
-# Retirement Planning App
+# 💰 Retirement Planner
 
-A household-first retirement planning tool with conservative projections and transparent calculations.
+[![CI](https://github.com/halfguru/retirement-planner/actions/workflows/ci.yml/badge.svg)](https://github.com/halfguru/retirement-planner/actions/workflows/ci.yml)
+[![Deploy](https://github.com/halfguru/retirement-planner/actions/workflows/deploy.yml/badge.svg)](https://github.com/halfguru/retirement-planner/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
+> Are we actually on track — and why?
 
-## Purpose
+A household-first retirement planning tool with conservative projections and transparent calculations. All calculations happen in your browser — no accounts, no data collection, complete privacy.
 
-Build a retirement planning app that answers:
+**[🔗 Live Demo](https://halfguru.github.io/retirement-planner/)**
 
-> "Are we actually on track — and why?"
+## ✨ Features
 
-This tool provides clear, deterministic calculations to help households understand their retirement trajectory.
+- **🏠 Household-first dashboard** — Combined progress, not siloed by individual
+- **📊 Clear projections** — Visualize your portfolio growth over time
+- **🎯 Goal tracking** — See if you're on track for your retirement income target
+- **🔒 Privacy-first** — All calculations run locally in your browser
+- **⚡ Fast** — Core calculations powered by Rust/WebAssembly
 
----
+## 🚀 Quick Start
 
-## Design Philosophy
+```bash
+# Clone the repository
+git clone https://github.com/halfguru/retirement-planner.git
+cd retirement-planner
+
+# Install frontend dependencies
+cd frontend && npm install
+
+# Start development server
+npm run dev
+```
+
+Open http://localhost:5173 to view the app.
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React + TypeScript + Tailwind CSS |
+| **Charts** | Recharts |
+| **Calculations** | Rust compiled to WebAssembly (WASM) |
+
+The Rust core provides:
+- Single source of truth for all financial calculations
+- Deterministic, testable logic
+- High performance in the browser
+
+## 📖 Development
+
+### Build Commands
+
+**Frontend:**
+```bash
+npm run dev        # Start dev server
+npm run build      # Production build
+npm run typecheck  # TypeScript check
+npm run lint       # ESLint
+```
+
+**Backend (Rust/WASM):**
+```bash
+cd backend
+cargo build        # Build Rust
+cargo test         # Run tests
+cargo clippy       # Lint
+wasm-pack build --target web  # Build WASM
+```
+
+### AI-Assisted Development
+
+This project includes [OpenCode](https://opencode.ai) configuration:
+
+| Command | Description |
+|---------|-------------|
+| `/feature <name>` | Full feature workflow |
+| `/review` | Multi-specialist code review |
+| `/prepare-pr` | PR with WASM validation |
+
+See [AGENTS.md](./AGENTS.md) for detailed build commands and conventions.
+
+## 🎯 Design Philosophy
 
 ### Core Principles
 
-* **Conservative assumptions** - Default to realistic, not optimistic projections
-* **Explicit explanations** - Show the math, don't hide it
-* **Household-first approach** - Evaluate savings jointly, not by individual accounts
+- **Conservative assumptions** — Realistic, not optimistic projections
+- **Explicit explanations** — Show the math, don't hide it
+- **Household-first approach** — Evaluate savings jointly
 
-### Approach
-
-* Clear models with deterministic calculations
-* Conservative, defensible assumptions
-* Household-level framing (shared outcomes)
-
----
-
-## Retirement Planning Philosophy
-
-* Retirement success is a **household outcome**
-* Savings are evaluated jointly, regardless of who contributes
-* Tax-advantaged account allocation should be **strategic**, not equal
-* Higher marginal tax rate → tax-deferred accounts priority
-* Lower marginal tax rate → tax-free accounts priority
-
-Core reframing:
+### Retirement Planning Philosophy
 
 > One household balance sheet, multiple tax wrappers.
 
----
+- Retirement success is a **household outcome**
+- Savings evaluated jointly, regardless of who contributes
+- Tax-advantaged account allocation should be **strategic**
 
-## Key Differentiators
+## 🚫 Non-Goals (For Now)
 
-* **Household-first dashboard** - Combined household progress, not siloed by individual
-* **Pension-equivalent framing** - "Your plan ≈ $X/year indexed pension"
-* **Strategic allocation guidance** - Data-driven recommendations on tax-advantaged accounts
-* **Scenario testing** - Test different assumptions and see their impact
+- Bank account linking
+- Real-time market data
+- Complex tax optimization engines
+- Monte Carlo simulations
+- FIRE or early-retirement evangelism
 
----
+## 📄 License
 
-## Tech Stack
-
-### High-Level Architecture
-
-* Web-first application
-* No backend initially (client-side only)
-* No user accounts
-* Privacy-first (all calculations happen in the browser)
-
-### Implementation
-
-* **Frontend:** React + TypeScript + Tailwind CSS
-* **UI Components:** shadcn/ui or similar for polished, modern interface
-* **Charts:** Recharts for clean visualizations
-* **Core financial logic:** Rust compiled to WebAssembly (WASM)
-* **Optional future:** Desktop app via Tauri (same Rust core)
-
-The Rust core exists to:
-* Be the single source of truth for calculations
-* Reduce bugs and ambiguity
-* Increase trust in outputs
-
-### Development Workflow
-
-This project includes an [OpenCode](https://opencode.ai) configuration for structured AI-assisted development:
-
-* `/feature <name>` - Full feature workflow
-* `/review` - Multi-specialist code review
-* `/prepare-pr` - PR preparation with WASM validation
-
-See [AGENTS.md](./AGENTS.md) for build commands and conventions.
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
-## What the App Must Do Well
-
-* Show household progress clearly
-* Translate savings into *income*, not just balances
-* Make pension comparisons fair and explicit
-* Provide transparent, understandable calculations
-* Deliver a polished, professional user experience
-
----
-
-## Non-Goals (For Now)
-
-* Bank account linking
-* Real-time market data
-* Complex tax optimization engines
-* Monte Carlo simulations
-* FIRE or early-retirement evangelism
-
-Those may come later, but clarity comes first.
-
----
-
-## Success Criteria
-
-This project is successful if:
-* Users can make informed financial decisions
-* The logic is understandable and explainable
-* Conservative assumptions build trust
-* The tool provides actionable insights
-* The UI is polished and intuitive
-
----
-
-*End of context. This file should be treated as long-term background for all discussions related to this project.*
+*Built with ❤️ using Rust (WASM), React, and TypeScript*
