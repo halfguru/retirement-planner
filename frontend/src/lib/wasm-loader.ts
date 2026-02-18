@@ -1,7 +1,8 @@
 import init, { RetirementCalculator } from './retirement_core.js'
+import type { RetirementCalculator as RetirementCalculatorType } from './retirement_core.d.ts'
 
 let wasmInitialized = false
-let calculator: RetirementCalculator | null = null
+let calculator: RetirementCalculatorType | null = null
 
 export async function initWasm() {
   if (wasmInitialized) {
@@ -15,7 +16,7 @@ export async function initWasm() {
   return calculator
 }
 
-export function getCalculator() {
+export function getCalculator(): RetirementCalculatorType {
   if (!wasmInitialized || !calculator) {
     throw new Error('WASM not initialized. Call initWasm() first.')
   }

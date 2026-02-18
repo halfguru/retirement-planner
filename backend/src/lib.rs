@@ -1,11 +1,11 @@
-mod calculations;
+pub mod calculations;
 mod models;
 
 use wasm_bindgen::prelude::*;
 
 pub use calculations::{
-    calculate_projection, calculate_simple_projection, calculate_yearly_projections,
-    SimpleProjection,
+    calculate_additional_annual_savings, calculate_projection, calculate_simple_projection,
+    calculate_yearly_projections, SimpleProjection,
 };
 pub use models::{
     AccountBalance, Assumptions, ChildInfo, ContributionConfig, HouseholdConfig,
@@ -118,5 +118,25 @@ impl RetirementCalculator {
 
         serde_wasm_bindgen::to_value(&projections)
             .map_err(|e| JsValue::from_str(&format!("Failed to serialize projections: {}", e)))
+    }
+
+    #[wasm_bindgen]
+    pub fn calculate_additional_annual_savings(
+        &self,
+        current_portfolio: f64,
+        target_portfolio: f64,
+        years: u32,
+        return_rate: f64,
+        inflation_rate: f64,
+        current_annual_contributions: f64,
+    ) -> f64 {
+        calculate_additional_annual_savings(
+            current_portfolio,
+            target_portfolio,
+            years,
+            return_rate,
+            inflation_rate,
+            current_annual_contributions,
+        )
     }
 }
