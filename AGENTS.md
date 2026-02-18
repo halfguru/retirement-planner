@@ -35,10 +35,15 @@ This file guides agentic coding agents working on the retirement planning app.
 - **Frontend**: Type check, lint, build
 - **Backend**: Tests, clippy lint, format check, WASM build
 
-### Build Pipeline (`.github/workflows/build.yml`)
-- Runs on version tags (`v*`)
+### Deploy Pipeline (`.github/workflows/deploy.yml`)
+- Runs on push to `main` branch
 - Builds WASM and frontend
-- Uploads `frontend/dist` as artifacts for deployment
+- Deploys to GitHub Pages: https://halfguru.github.io/retirement-planner/
+
+### Release Pipeline (`.github/workflows/release.yml`)
+- Runs on version tags (`v*`, e.g., `v1.0.0`)
+- Builds and creates GitHub Release with artifacts
+- Uses semantic versioning
 
 ## Philosophy Alignment
 
@@ -69,6 +74,6 @@ This project includes custom OpenCode commands and agents for structured develop
 
 ### Skills
 
-Skills are loaded on-demand via `/skill <name>`:
+Skills are loaded on-demand via `/skill <name>` (located in `.agents/skills/`):
 - `react-component` - React component patterns with TypeScript
 - `wasm-workflow` - WASM build and integration workflow

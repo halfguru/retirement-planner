@@ -22,7 +22,16 @@ git diff main...HEAD --stat
 git log main...HEAD --oneline
 ```
 
-## Step 3: Generate Description
+## Step 3: Determine Labels
+
+Based on changed files, determine appropriate labels:
+- `frontend` label if any files in `frontend/src/`
+- `backend` label if any files in `backend/src/`
+- `wasm` label if WASM-related changes
+- `ci-cd` label if `.github/workflows/` or `.opencode/` changed
+- `documentation` label if `README.md`, `AGENTS.md`, or `*.md` changed
+
+## Step 4: Generate Description
 
 Include:
 - **Summary**: What and why
@@ -30,9 +39,15 @@ Include:
 - **Testing**: How to verify locally
 - **Checklist**: typecheck, lint, tests, WASM if applicable
 
-## Step 4: Create PR
+## Step 5: Create PR
 
-Output the command:
+Create PR with auto-assignment and labels:
 ```bash
-gh pr create --title "<title>" --body "<description>"
+gh pr create \
+  --title "<title>" \
+  --body "<description>" \
+  --assignee "@me" \
+  --label "<determined-labels>"
 ```
+
+After creation, note the PR URL for review.
